@@ -1,0 +1,6 @@
+:root {
+    --lkt-field-validation-font-family: system-ui, Helvetica;
+    --lkt-field-validation-font-size: 12px;
+    --lkt-field-validation-font-weight: 300;
+    --lkt-field-validation-color: #ff0000;
+}
