@@ -23,7 +23,7 @@ const computedMessage = computed(() => {
 </script>
 
 <template>
-<div class="lkt-field-validation-message">
+<div class="lkt-field-validation-message" :class="'code-' + code">
     {{computedMessage}}
 </div>
 </template>

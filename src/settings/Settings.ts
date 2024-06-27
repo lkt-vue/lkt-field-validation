@@ -7,6 +7,7 @@ export const Settings = {
             'ko-max-str' : '',
             'ko-max-num' : '',
             'ko-email' : '',
+            'ko-empty' : '',
         }
     }
 }

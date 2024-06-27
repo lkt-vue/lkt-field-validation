@@ -4,5 +4,6 @@ export type ValidationCode =
     | 'ko-max-str'
     | 'ko-max-num'
     | 'ko-email'
+    | 'ko-empty'
     | string
     ;

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {ValidationCode} from "../types/ValidationCode";
 import ValidationItem from "../components/ValidationItem.vue";
+import {nextTick, ref, watch} from "vue";
 
 const props = withDefaults(defineProps<{
     items: ValidationCode[],
@@ -9,11 +10,20 @@ const props = withDefaults(defineProps<{
     items: () => [],
     stack: 'default',
 });
+
+const refreshing = ref(false);
+
+watch(() => props.items, (v) => {
+    refreshing.value = true;
+
+    nextTick(() => refreshing.value = false);
+
+}, {deep: true});
 </script>
 
 <template>
-    <div class="lkt-field-validation-info">
-        <validation-item v-for="code in items" :code="code" :stack="stack"/>
+    <div class="lkt-field-validation-info" v-if="!refreshing">
+        <validation-item v-for="code in items" :code="code" :stack="stack" :key="code"/>
     </div>
 </template>
 
