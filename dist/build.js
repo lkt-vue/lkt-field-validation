@@ -1,8 +1,11 @@
-import { defineComponent as d, computed as u, openBlock as n, createElementBlock as o, normalizeClass as c, toDisplayString as m, ref as f, watch as p, nextTick as v, Fragment as g, renderList as k, createBlock as _, createCommentVNode as M } from "vue";
-import { __ as h } from "lkt-i18n";
-const i = {
+import { defineComponent as u, computed as r, openBlock as s, createElementBlock as d, normalizeClass as p, createBlock as c, resolveDynamicComponent as v, createCommentVNode as f, createTextVNode as k, toDisplayString as g, ref as _, watch as M, nextTick as x, Fragment as S, renderList as h } from "vue";
+import { __ as V } from "lkt-i18n";
+import { fill as y } from "lkt-string-tools";
+const n = {
+  iconSlot: "",
   validationMessages: {
     default: {
+      "ko-num-between": "",
       "ko-min-str": "",
       "ko-min-num": "",
       "ko-max-str": "",
@@ -11,53 +14,66 @@ const i = {
       "ko-empty": ""
     }
   }
-}, V = (t, a = "default") => {
-  let e = i.validationMessages[a] && i.validationMessages[a][t] ? i.validationMessages[a][t] : "";
+}, C = (t, a = "default") => {
+  let e = n.validationMessages[a] && n.validationMessages[a][t] ? n.validationMessages[a][t] : "";
   return e || (e = ""), e;
-}, y = /* @__PURE__ */ d({
+}, F = /* @__PURE__ */ u({
   __name: "ValidationItem",
   props: {
     code: { default: "" },
-    stack: { default: "default" }
+    stack: { default: "default" },
+    min: { default: 0 },
+    max: { default: 0 }
   },
   setup(t) {
-    const a = t, e = u(() => {
-      let s = V(a.code, a.stack);
-      return s.startsWith("__:") ? h(s.substring(3)) : s;
-    });
-    return (s, r) => (n(), o("div", {
-      class: c(["lkt-field-validation-message", "code-" + s.code])
-    }, m(e.value), 3));
+    const a = t, e = r(() => {
+      let o = C(a.code, a.stack), l = {
+        min: a.min,
+        max: a.max
+      };
+      return o.startsWith("__:") ? V(o.substring(3), l) : y(o, l, ":", "");
+    }), i = r(() => n.iconSlot !== ""), m = r(() => n.iconSlot);
+    return (o, l) => (s(), d("div", {
+      class: p(["lkt-field-validation-message", "code-" + o.code])
+    }, [
+      i.value ? (s(), c(v(m.value), { key: 0 })) : f("", !0),
+      k(" " + g(e.value), 1)
+    ], 2));
   }
-}), C = {
+}), B = {
   key: 0,
   class: "lkt-field-validation-info"
-}, F = /* @__PURE__ */ d({
+}, I = /* @__PURE__ */ u({
   __name: "LktFieldValidations",
   props: {
     items: { default: () => [] },
-    stack: { default: "default" }
+    stack: { default: "default" },
+    min: { default: 0 },
+    max: { default: 0 }
   },
   setup(t) {
-    const a = t, e = f(!1);
-    return p(() => a.items, (s) => {
-      e.value = !0, v(() => e.value = !1);
-    }, { deep: !0 }), (s, r) => e.value ? M("", !0) : (n(), o("div", C, [
-      (n(!0), o(g, null, k(s.items, (l) => (n(), _(y, {
-        code: l,
-        stack: s.stack,
-        key: l
-      }, null, 8, ["code", "stack"]))), 128))
+    const a = t, e = _(!1);
+    return M(() => a.items, (i) => {
+      e.value = !0, x(() => e.value = !1);
+    }, { deep: !0 }), (i, m) => e.value ? f("", !0) : (s(), d("div", B, [
+      (s(!0), d(S, null, h(i.items, (o) => (s(), c(F, {
+        code: o,
+        stack: i.stack,
+        key: o,
+        min: i.min,
+        max: i.max
+      }, null, 8, ["code", "stack", "min", "max"]))), 128))
     ]));
   }
-}), L = {
+}), D = {
   install: (t) => {
-    t.component("lkt-field-validations") === void 0 && t.component("lkt-field-validations", F);
+    t.component("lkt-field-validations") === void 0 && t.component("lkt-field-validations", I);
   }
-}, S = (t, a, e = "default") => {
-  e || (e = "default"), i.validationMessages[e] || (i.validationMessages[e] = {}), i.validationMessages[e][t] = a;
-};
+}, N = (t, a, e = "default") => {
+  e || (e = "default"), n.validationMessages[e] || (n.validationMessages[e] = {}), n.validationMessages[e][t] = a;
+}, T = (t) => (n.iconSlot = t, !0);
 export {
-  L as default,
-  S as setFieldValidationMessage
+  D as default,
+  T as setFieldValidationIconSlot,
+  N as setFieldValidationMessage
 };

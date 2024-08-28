@@ -1,5 +1,6 @@
-declare namespace L {
+declare namespace D {
     function install(t: any): void;
 }
-declare function S(t: any, a: any, e?: string): void;
-export { L as default, S as setFieldValidationMessage };
+declare function T(t: any): boolean;
+declare function N(t: any, a: any, e?: string): void;
+export { D as default, T as setFieldValidationIconSlot, N as setFieldValidationMessage };

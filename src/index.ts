@@ -18,3 +18,8 @@ export const setFieldValidationMessage = (code: string, message: string, stack: 
   if (!Settings.validationMessages[stack]) Settings.validationMessages[stack] = {};
   Settings.validationMessages[stack][code] = message;
 }
+
+export const setFieldValidationIconSlot = (component: string|Component) => {
+  Settings.iconSlot = component;
+  return true;
+}

@@ -1,7 +1,10 @@
 export const Settings = {
 
+    iconSlot: '',
+
     validationMessages: {
         default: {
+            'ko-num-between' : '',
             'ko-min-str' : '',
             'ko-min-num' : '',
             'ko-max-str' : '',
