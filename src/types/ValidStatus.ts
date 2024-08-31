@@ -1,0 +1,1 @@
+export type ValidStatus = 'ok' | 'ko' | 'info';

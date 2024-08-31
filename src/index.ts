@@ -3,6 +3,7 @@ import {App, Plugin} from 'vue';
 import "../style.css";
 import {default as libComponent} from './lib-components/LktFieldValidations.vue';
 import {Settings} from "./settings/Settings";
+import {FieldValidation} from "./classes/FieldValidation";
 
 const LktFieldValidation: Plugin = {
   install: (app: App) => {

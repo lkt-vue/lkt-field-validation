@@ -1,29 +1,29 @@
 <script setup lang="ts">
-import {ValidationCode} from "../types/ValidationCode";
 import {computed} from "vue";
 import {getCodeMessage} from "../functions/functions";
 import {__} from "lkt-i18n";
 import {fill} from "lkt-string-tools";
 import {Settings} from "../settings/Settings";
+import {FieldValidation} from "../classes/FieldValidation";
 
 const props = withDefaults(defineProps<{
-    code: ValidationCode,
+    validation: FieldValidation,
     stack: string,
-    min: number,
-    max: number,
 }>(), {
-    code: '',
     stack: 'default',
-    min: 0,
-    max: 0
 });
 
 const computedMessage = computed(() => {
-        let msg = getCodeMessage(props.code, props.stack),
+        let msg = getCodeMessage(props.validation.code, props.stack),
             replacements = {
-                min: props.min,
-                max: props.max
+                min: props.validation.min,
+                max: props.validation.max
             };
+
+        let statusMsg = getCodeMessage(props.validation.status + '-' + props.validation.code, props.stack);
+        if (statusMsg) msg = statusMsg;
+
+        if (!msg) return props.validation.code;
 
         if (msg.startsWith('__:')) {
             return __(msg.substring(3), replacements);
@@ -36,11 +36,19 @@ const computedMessage = computed(() => {
     }),
     iconSlot = computed(() => {
         return Settings.iconSlot;
+    }),
+    computedClasses = computed(() => {
+        let r = [];
+
+        r.push('code-' + props.validation.code);
+        r.push('is-' + props.validation.status);
+
+        return r.join(' ');
     });
 </script>
 
 <template>
-    <div class="lkt-field-validation-message" :class="'code-' + code">
+    <div class="lkt-field-validation-message" :class="computedClasses">
         <template v-if="hasIconSlot">
             <component
                 :is="iconSlot"/>

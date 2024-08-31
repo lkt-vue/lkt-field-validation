@@ -1,6 +1,6 @@
-import { defineComponent as u, computed as r, openBlock as s, createElementBlock as d, normalizeClass as p, createBlock as c, resolveDynamicComponent as v, createCommentVNode as f, createTextVNode as k, toDisplayString as g, ref as _, watch as M, nextTick as x, Fragment as S, renderList as h } from "vue";
-import { __ as V } from "lkt-i18n";
-import { fill as y } from "lkt-string-tools";
+import { defineComponent as v, computed as u, openBlock as l, createElementBlock as d, normalizeClass as g, createBlock as h, resolveDynamicComponent as M, createCommentVNode as x, createTextVNode as _, toDisplayString as S, ref as p, watch as w, nextTick as y, Fragment as C, renderList as V } from "vue";
+import { __ as I } from "lkt-i18n";
+import { fill as b } from "lkt-string-tools";
 const n = {
   iconSlot: "",
   validationMessages: {
@@ -11,39 +11,68 @@ const n = {
       "ko-max-str": "",
       "ko-max-num": "",
       "ko-email": "",
-      "ko-empty": ""
+      "ko-empty": "",
+      "ko-min-numbers": "",
+      "ko-max-numbers": "",
+      "ko-min-chars": "",
+      "ko-max-chars": "",
+      "ko-min-upper-chars": "",
+      "ko-max-upper-chars": "",
+      "ko-min-lower-chars": "",
+      "ko-max-lower-chars": "",
+      "ko-min-special-chars": "",
+      "ko-max-special-chars": ""
     }
   }
-}, C = (t, a = "default") => {
-  let e = n.validationMessages[a] && n.validationMessages[a][t] ? n.validationMessages[a][t] : "";
-  return e || (e = ""), e;
-}, F = /* @__PURE__ */ u({
+}, k = (s, e = "default") => {
+  let t = n.validationMessages[e] && n.validationMessages[e][s] ? n.validationMessages[e][s] : "";
+  return t || (t = ""), t;
+}, F = /* @__PURE__ */ v({
   __name: "ValidationItem",
   props: {
-    code: { default: "" },
-    stack: { default: "default" },
-    min: { default: 0 },
-    max: { default: 0 }
+    validation: {},
+    stack: { default: "default" }
   },
-  setup(t) {
-    const a = t, e = r(() => {
-      let o = C(a.code, a.stack), l = {
-        min: a.min,
-        max: a.max
-      };
-      return o.startsWith("__:") ? V(o.substring(3), l) : y(o, l, ":", "");
-    }), i = r(() => n.iconSlot !== ""), m = r(() => n.iconSlot);
-    return (o, l) => (s(), d("div", {
-      class: p(["lkt-field-validation-message", "code-" + o.code])
+  setup(s) {
+    const e = s, t = u(() => {
+      let a = k(e.validation.code, e.stack), o = {
+        min: e.validation.min,
+        max: e.validation.max
+      }, f = k(e.validation.status + "-" + e.validation.code, e.stack);
+      return f && (a = f), a ? a.startsWith("__:") ? I(a.substring(3), o) : b(a, o, ":", "") : e.validation.code;
+    }), c = u(() => n.iconSlot !== ""), r = u(() => n.iconSlot), i = u(() => {
+      let a = [];
+      return a.push("code-" + e.validation.code), a.push("is-" + e.validation.status), a.join(" ");
+    });
+    return (a, o) => (l(), d("div", {
+      class: g(["lkt-field-validation-message", i.value])
     }, [
-      i.value ? (s(), c(v(m.value), { key: 0 })) : f("", !0),
-      k(" " + g(e.value), 1)
+      c.value ? (l(), h(M(r.value), { key: 0 })) : x("", !0),
+      _(" " + S(t.value), 1)
     ], 2));
   }
-}), B = {
+});
+class m {
+  constructor(e, t) {
+    this.code = "", this.status = "info", this.min = 0, this.max = 0, this.code = e, this.status = t;
+  }
+  setMin(e) {
+    return this.min = e, this;
+  }
+  setMax(e) {
+    return this.max = e, this;
+  }
+  static createMinStr(e, t = "ko") {
+    return new m("min-str", t).setMin(e);
+  }
+  static createMaxStr(e, t = "ko") {
+    return new m("max-str", t).setMax(e);
+  }
+}
+const B = {
   key: 0,
   class: "lkt-field-validation-info"
-}, I = /* @__PURE__ */ u({
+}, L = /* @__PURE__ */ v({
   __name: "LktFieldValidations",
   props: {
     items: { default: () => [] },
@@ -51,29 +80,38 @@ const n = {
     min: { default: 0 },
     max: { default: 0 }
   },
-  setup(t) {
-    const a = t, e = _(!1);
-    return M(() => a.items, (i) => {
-      e.value = !0, x(() => e.value = !1);
-    }, { deep: !0 }), (i, m) => e.value ? f("", !0) : (s(), d("div", B, [
-      (s(!0), d(S, null, h(i.items, (o) => (s(), c(F, {
-        code: o,
+  setup(s) {
+    const e = s, t = p([]), c = () => {
+      let i = [];
+      return e.items.forEach((a) => {
+        if (typeof a == "string") {
+          let o = new m(a.replace("ko-", ""), "ko").setMin(e.min).setMax(e.max);
+          i.push(o);
+        } else
+          i.push(a);
+      }), t.value = i, i;
+    };
+    c();
+    const r = p(!1);
+    return w(() => e.items, (i) => {
+      r.value = !0, c(), y(() => r.value = !1);
+    }, { deep: !0 }), (i, a) => r.value ? x("", !0) : (l(), d("div", B, [
+      (l(!0), d(C, null, V(t.value, (o) => (l(), h(F, {
+        validation: o,
         stack: i.stack,
-        key: o,
-        min: i.min,
-        max: i.max
-      }, null, 8, ["code", "stack", "min", "max"]))), 128))
+        key: o.code
+      }, null, 8, ["validation", "stack"]))), 128))
     ]));
   }
-}), D = {
-  install: (t) => {
-    t.component("lkt-field-validations") === void 0 && t.component("lkt-field-validations", I);
+}), T = {
+  install: (s) => {
+    s.component("lkt-field-validations") === void 0 && s.component("lkt-field-validations", L);
   }
-}, N = (t, a, e = "default") => {
-  e || (e = "default"), n.validationMessages[e] || (n.validationMessages[e] = {}), n.validationMessages[e][t] = a;
-}, T = (t) => (n.iconSlot = t, !0);
+}, j = (s, e, t = "default") => {
+  t || (t = "default"), n.validationMessages[t] || (n.validationMessages[t] = {}), n.validationMessages[t][s] = e;
+}, z = (s) => (n.iconSlot = s, !0);
 export {
-  D as default,
-  T as setFieldValidationIconSlot,
-  N as setFieldValidationMessage
+  T as default,
+  z as setFieldValidationIconSlot,
+  j as setFieldValidationMessage
 };

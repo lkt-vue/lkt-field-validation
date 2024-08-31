@@ -1,1 +1,0 @@
-export type ValidationStatus = 'ok' | 'ko' | 'i';
