@@ -14,6 +14,8 @@ const LktFieldValidation: Plugin = {
 
 export default LktFieldValidation;
 
+export {FieldValidation};
+
 export const setFieldValidationMessage = (code: string, message: string, stack: string = 'default') => {
   if (!stack) stack = 'default';
   if (!Settings.validationMessages[stack]) Settings.validationMessages[stack] = {};
