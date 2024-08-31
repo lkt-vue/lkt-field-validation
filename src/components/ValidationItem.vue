@@ -17,7 +17,8 @@ const computedMessage = computed(() => {
         let msg = getCodeMessage(props.validation.code, props.stack),
             replacements = {
                 min: props.validation.min,
-                max: props.validation.max
+                max: props.validation.max,
+                value: props.validation.equalToValue
             };
 
         let statusMsg = getCodeMessage(props.validation.status + '-' + props.validation.code, props.stack);

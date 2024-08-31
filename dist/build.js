@@ -1,7 +1,7 @@
-import { defineComponent as v, computed as u, openBlock as l, createElementBlock as d, normalizeClass as g, createBlock as h, resolveDynamicComponent as M, createCommentVNode as x, createTextVNode as _, toDisplayString as S, ref as p, watch as w, nextTick as y, Fragment as C, renderList as V } from "vue";
-import { __ as I } from "lkt-i18n";
-import { fill as b } from "lkt-string-tools";
-const n = {
+import { defineComponent as x, computed as l, openBlock as m, createElementBlock as p, normalizeClass as d, createBlock as f, resolveDynamicComponent as w, createCommentVNode as v, createTextVNode as g, toDisplayString as C, ref as h, watch as S, nextTick as y, Fragment as b, renderList as T } from "vue";
+import { __ as q } from "lkt-i18n";
+import { fill as E } from "lkt-string-tools";
+const o = {
   iconSlot: "",
   validationMessages: {
     default: {
@@ -24,37 +24,38 @@ const n = {
       "ko-max-special-chars": ""
     }
   }
-}, k = (s, e = "default") => {
-  let t = n.validationMessages[e] && n.validationMessages[e][s] ? n.validationMessages[e][s] : "";
+}, M = (r, e = "default") => {
+  let t = o.validationMessages[e] && o.validationMessages[e][r] ? o.validationMessages[e][r] : "";
   return t || (t = ""), t;
-}, F = /* @__PURE__ */ v({
+}, N = /* @__PURE__ */ x({
   __name: "ValidationItem",
   props: {
     validation: {},
     stack: { default: "default" }
   },
-  setup(s) {
-    const e = s, t = u(() => {
-      let a = k(e.validation.code, e.stack), o = {
+  setup(r) {
+    const e = r, t = l(() => {
+      let s = M(e.validation.code, e.stack), i = {
         min: e.validation.min,
-        max: e.validation.max
-      }, f = k(e.validation.status + "-" + e.validation.code, e.stack);
-      return f && (a = f), a ? a.startsWith("__:") ? I(a.substring(3), o) : b(a, o, ":", "") : e.validation.code;
-    }), c = u(() => n.iconSlot !== ""), r = u(() => n.iconSlot), i = u(() => {
-      let a = [];
-      return a.push("code-" + e.validation.code), a.push("is-" + e.validation.status), a.join(" ");
+        max: e.validation.max,
+        value: e.validation.equalToValue
+      }, k = M(e.validation.status + "-" + e.validation.code, e.stack);
+      return k && (s = k), s ? s.startsWith("__:") ? q(s.substring(3), i) : E(s, i, ":", "") : e.validation.code;
+    }), c = l(() => o.iconSlot !== ""), u = l(() => o.iconSlot), n = l(() => {
+      let s = [];
+      return s.push("code-" + e.validation.code), s.push("is-" + e.validation.status), s.join(" ");
     });
-    return (a, o) => (l(), d("div", {
-      class: g(["lkt-field-validation-message", i.value])
+    return (s, i) => (m(), p("div", {
+      class: d(["lkt-field-validation-message", n.value])
     }, [
-      c.value ? (l(), h(M(r.value), { key: 0 })) : x("", !0),
-      _(" " + S(t.value), 1)
+      c.value ? (m(), f(w(u.value), { key: 0 })) : v("", !0),
+      g(" " + C(t.value), 1)
     ], 2));
   }
 });
-class m {
+class a {
   constructor(e, t) {
-    this.code = "", this.status = "info", this.min = 0, this.max = 0, this.code = e, this.status = t;
+    this.code = "", this.status = "info", this.min = 0, this.max = 0, this.equalToValue = void 0, this.code = e, this.status = t;
   }
   setMin(e) {
     return this.min = e, this;
@@ -62,17 +63,68 @@ class m {
   setMax(e) {
     return this.max = e, this;
   }
+  setEqualToValue(e) {
+    return this.equalToValue = e, this;
+  }
+  static createEmpty(e = "ko") {
+    return new a("empty", e);
+  }
+  static createEmail(e = "ko") {
+    return new a("email", e);
+  }
   static createMinStr(e, t = "ko") {
-    return new m("min-str", t).setMin(e);
+    return new a("min-str", t).setMin(e);
   }
   static createMaxStr(e, t = "ko") {
-    return new m("max-str", t).setMax(e);
+    return new a("max-str", t).setMax(e);
+  }
+  static createMinNum(e, t = "ko") {
+    return new a("min-num", t).setMin(e);
+  }
+  static createMaxNum(e, t = "ko") {
+    return new a("max-num", t).setMax(e);
+  }
+  static createNumBetween(e, t, c = "ko") {
+    return new a("max-num", c).setMin(e).setMax(t);
+  }
+  static createMinNumbers(e, t = "ko") {
+    return new a("min-numbers", t).setMin(e);
+  }
+  static createMaxNumbers(e, t = "ko") {
+    return new a("max-numbers", t).setMax(e);
+  }
+  static createMinUpperChars(e, t = "ko") {
+    return new a("min-upper-chars", t).setMin(e);
+  }
+  static createMaxUpperChars(e, t = "ko") {
+    return new a("max-upper-chars", t).setMax(e);
+  }
+  static createMinLowerChars(e, t = "ko") {
+    return new a("min-lower-chars", t).setMin(e);
+  }
+  static createMaxLowerChars(e, t = "ko") {
+    return new a("max-lower-chars", t).setMax(e);
+  }
+  static createMinSpecialChars(e, t = "ko") {
+    return new a("min-special-chars", t).setMin(e);
+  }
+  static createMaxSpecialChars(e, t = "ko") {
+    return new a("max-special-chars", t).setMax(e);
+  }
+  static createMinChars(e, t = "ko") {
+    return new a("min-chars", t).setMin(e);
+  }
+  static createMaxChars(e, t = "ko") {
+    return new a("max-chars", t).setMax(e);
+  }
+  static createEqualTo(e, t = "ko") {
+    return new a("equal-to", t).setEqualToValue(e);
   }
 }
-const B = {
+const I = {
   key: 0,
   class: "lkt-field-validation-info"
-}, L = /* @__PURE__ */ v({
+}, L = /* @__PURE__ */ x({
   __name: "LktFieldValidations",
   props: {
     items: { default: () => [] },
@@ -80,39 +132,39 @@ const B = {
     min: { default: 0 },
     max: { default: 0 }
   },
-  setup(s) {
-    const e = s, t = p([]), c = () => {
-      let i = [];
-      return e.items.forEach((a) => {
-        if (typeof a == "string") {
-          let o = new m(a.replace("ko-", ""), "ko").setMin(e.min).setMax(e.max);
-          i.push(o);
+  setup(r) {
+    const e = r, t = h([]), c = () => {
+      let n = [];
+      return e.items.forEach((s) => {
+        if (typeof s == "string") {
+          let i = new a(s.replace("ko-", ""), "ko").setMin(e.min).setMax(e.max);
+          n.push(i);
         } else
-          i.push(a);
-      }), t.value = i, i;
+          n.push(s);
+      }), t.value = n, n;
     };
     c();
-    const r = p(!1);
-    return w(() => e.items, (i) => {
-      r.value = !0, c(), y(() => r.value = !1);
-    }, { deep: !0 }), (i, a) => r.value ? x("", !0) : (l(), d("div", B, [
-      (l(!0), d(C, null, V(t.value, (o) => (l(), h(F, {
-        validation: o,
-        stack: i.stack,
-        key: o.code
+    const u = h(!1);
+    return S(() => e.items, (n) => {
+      u.value = !0, c(), y(() => u.value = !1);
+    }, { deep: !0 }), (n, s) => u.value ? v("", !0) : (m(), p("div", I, [
+      (m(!0), p(b, null, T(t.value, (i) => (m(), f(N, {
+        validation: i,
+        stack: n.stack,
+        key: i.code
       }, null, 8, ["validation", "stack"]))), 128))
     ]));
   }
-}), T = {
-  install: (s) => {
-    s.component("lkt-field-validations") === void 0 && s.component("lkt-field-validations", L);
+}), j = {
+  install: (r) => {
+    r.component("lkt-field-validations") === void 0 && r.component("lkt-field-validations", L);
   }
-}, j = (s, e, t = "default") => {
-  t || (t = "default"), n.validationMessages[t] || (n.validationMessages[t] = {}), n.validationMessages[t][s] = e;
-}, z = (s) => (n.iconSlot = s, !0);
+}, z = (r, e, t = "default") => {
+  t || (t = "default"), o.validationMessages[t] || (o.validationMessages[t] = {}), o.validationMessages[t][r] = e;
+}, W = (r) => (o.iconSlot = r, !0);
 export {
-  m as FieldValidation,
-  T as default,
-  z as setFieldValidationIconSlot,
-  j as setFieldValidationMessage
+  a as FieldValidation,
+  j as default,
+  W as setFieldValidationIconSlot,
+  z as setFieldValidationMessage
 };

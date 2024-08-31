@@ -5,6 +5,7 @@ export type FieldValidationCode =
     | 'max-num'
     | 'email'
     | 'empty'
+    | 'equal-to'
     | 'min-numbers'
     | 'max-numbers'
     | 'min-chars'
